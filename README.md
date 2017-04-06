@@ -11,12 +11,12 @@ The image is currently unable to send emails while registering teams, which mean
 Create a container from this image with:
 
 ```
-docker run -d -p 8080:80 -v local_path_to_mooshak_data:/home/mooshak/data rigon/mooshak
+docker run -d -p 8080:80 -v local_path_to_mooshak_data:/home/mooshak/data rigon/mooshak2
 ```
 
 ## Ports
 
-- **80** - The Mooshak web interface, available at http://localhost:8080/mooshak2
+- **80** - The Mooshak web interface, available at http://localhost:8080/mooshak
 
 ## Volumes
 
