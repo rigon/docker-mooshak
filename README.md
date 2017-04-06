@@ -1,6 +1,6 @@
 # Mooshak 2 Docker image
 
-A Docker image with [Mooshak](https://mooshak2.dcc.fc.up.pt) - a system for managing programming contests online, including but not limited to user and team management, problem serving, solution uploading and automatic judging.
+A Docker image with [Mooshak 2](https://mooshak2.dcc.fc.up.pt) - a system for managing programming contests online, including but not limited to user and team management, problem serving, solution uploading and automatic judging.
 
 The image is currently unable to send emails while registering teams, which means users must be created manually through the folder system.
 
