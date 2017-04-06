@@ -14,7 +14,7 @@ docker run -d -p 8080:80 -v local_path_to_mooshak_data:/home/mooshak/data rigon/
 
 ## Ports
 
-- **80** - The Mooshak web interface, available at http://localhost:8080/mooshak.
+- **80** - The Mooshak web interface, available at http://localhost:8080/mooshak
 
 ## Volumes
 
