@@ -1,29 +1,25 @@
-FROM ubuntu:12.04
-MAINTAINER Rui Gonçalves <ruippeixotog@gmail.com>
+# Mooshak 2
+FROM openjdk
+MAINTAINER Ricardo Gonçalves <ricardompgoncalves@gmail.com>
 
-RUN apt-get update
+# Install sudo
+RUN apt-get -y update && apt-get -y install sudo
 
-# install prerequisites
-RUN apt-get install -y gcc make tcl apache2 apache2-suexec supervisor
-RUN apt-get install -y lpr time cron host rsync libxml2-utils xsltproc
+# Get Mooshak installer
+RUN wget http://mooshak2.dcc.fc.up.pt/install/MooshakInstaller.jar
 
-RUN bash -c '\
-  cd /etc/apache2/mods-enabled;\
-  ln -s ../mods-available/userdir.conf;\
-  ln -s ../mods-available/userdir.load;\
-  ln -s ../mods-available/suexec.load;'
+# Install Mooshak with configs in install.config
+ADD install.conf /
+RUN grep "^[^#]" install.conf | java -jar MooshakInstaller.jar -cui
 
-ADD apache-userdir.conf /etc/apache2/mods-available/userdir.conf
-RUN mkdir -p /var/run/apache2
+# Fix permissions
+RUN chmod +x /home/mooshak/tomcat8/bin/*.sh
 
-# install Mooshak
-ADD https://mooshak.dcc.fc.up.pt/download/mooshak-1.5.2.tgz mooshak-1.5.2.tgz
-RUN tar xzf mooshak-1.5.2.tgz
-RUN cd mooshak-1.5.2 && sed -e 's/proc check_suexec {} {/proc check_suexec {} { return;/' < install > install-modded
-RUN cd mooshak-1.5.2 && sh install-modded
-
+# Expose port 80
 EXPOSE 80
+
+# Data volume
 VOLUME /home/mooshak/data
 
-ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-CMD /usr/bin/supervisord
+# Run Mooshak server
+ENTRYPOINT ["/home/mooshak/tomcat8/bin/catalina.sh", "run"]
